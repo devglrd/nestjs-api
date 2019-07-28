@@ -9,6 +9,7 @@ export class ArticleRessource {
       name: article.name,
       content: article.content,
       price: article.price,
+      publish: article.publish,
       created_at: article.created_at,
       updated_at: article.updated_at,
     };
@@ -21,6 +22,7 @@ export class ArticleRessource {
         name: article.name,
         content: article.content,
         price: article.price,
+        publish: article.publish,
         created_at: article.created_at,
         updated_at: article.updated_at,
       };
