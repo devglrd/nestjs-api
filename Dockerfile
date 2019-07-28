@@ -1,13 +1,13 @@
-FROM node:lts-alpine
+FROM node:11
 
-WORKDIR /app
+RUN mkdir /nest-api
 
-ENV NODE_ENV development
-COPY package.json yarn.lock ./
-RUN yarn
+WORKDIR /nest-api
 
-COPY . .
+COPY ./ /nest-api
 
-EXPOSE 3000
+RUN npm i && npm i -g pm2 && cp .env.docker .env && npm run build
 
-CMD [ "yarn", "start:dev" ]
+CMD ["pm2-runtime", "start", "ecosystem.config.js", "-i", "max"]
+
+EXPOSE $APP_PORT

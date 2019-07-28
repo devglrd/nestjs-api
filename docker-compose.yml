@@ -1,41 +1,21 @@
-version: "2"
+version: '3.5'
 services:
-  nest:
-    build: .
-    container_name: nest
-    depends_on:
-      - db
-    volumes:
-      - ./src:/app/src
-      - .env:/app/.env
-
-  nginx:
+  nest-api:
+    image: glrd/nest-api
     build:
-      context: .
-      dockerfile: Dockerfile-nginx
-    container_name: nest-nginx
-    depends_on:
-      - nest
-    environment:
-      - NGINX_SERVER_NAME=localhost
-      - NEST_HOST=nest
-      - NEST_PORT=3000
-      - NGINX_MAX_BODY=100M
+      context: ./
+    container_name: nest-api
+    command: bash -c 'pm2-runtime start ecosystem.config.js -i max'
+    links:
+      - nest-mysql
     ports:
-      - 80:80
+      - "3000:3000"
 
-  db:
-    image: mariadb:10
-    container_name: nest-db
+  nest-mysql:
+    image: mysql:5.7
+    container_name: nest-mysql
     environment:
-      MYSQL_DATABASE: nest
-      MYSQL_USER: nest
-      MYSQL_PASSWORD: nest
-      MYSQL_ROOT_PASSWORD: root
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=nest-api
     ports:
-      - 3306:3306
-    volumes:
-      - mariadbdata:/var/lib/mysql
-
-volumes:
-  mariadbdata:
+      - 3308:3306

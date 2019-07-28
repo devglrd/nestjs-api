@@ -1,16 +1,17 @@
-import { Get, Controller, UseGuards } from '@nestjs/common';
+import { Get, Controller, UseGuards, Res } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { ApiBearerAuth } from '@nestjs/swagger';
 import { AppService } from './app.service';
+import { Response } from 'express';
 
-@ApiBearerAuth()
 @Controller()
 export class AppController {
   constructor(private readonly appService: AppService) {}
 
   @Get()
-  @UseGuards(AuthGuard())
-  root(): string {
-    return this.appService.root();
+  root(@Res() res: Response): Response {
+    return res.send({
+      message: ' Welcome to Nest api',
+    });
   }
 }

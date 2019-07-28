@@ -1,16 +1,23 @@
-import { Controller, Body, Post, UseGuards, Get, Request } from '@nestjs/common';
+import {
+  Controller,
+  Body,
+  Post,
+  UseGuards,
+  Get,
+  Request,
+} from '@nestjs/common';
 import { ApiResponse, ApiUseTags, ApiBearerAuth } from '@nestjs/swagger';
 import { AuthGuard } from '@nestjs/passport';
 import { AuthService, LoginPayload, RegisterPayload } from './';
 import { UsersService } from './../user';
 
-@Controller('api/auth')
+@Controller('auth')
 @ApiUseTags('authentication')
 export class AuthController {
   constructor(
     private readonly authService: AuthService,
     private readonly userService: UsersService,
-  ) { }
+  ) {}
 
   @Post('login')
   @ApiResponse({ status: 201, description: 'Successful Login' })
@@ -35,7 +42,7 @@ export class AuthController {
   @Get('me')
   @ApiResponse({ status: 200, description: 'Successful Response' })
   @ApiResponse({ status: 401, description: 'Unauthorized' })
-  async getLoggedInUser(@Request() request): Promise<any> {
+  async getLoggedUser(@Request() request): Promise<any> {
     return request.user;
   }
 }

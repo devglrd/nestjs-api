@@ -4,6 +4,8 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ConfigModule, ConfigService } from './../config';
 import { AuthModule } from './../auth';
+import { ArticleModule } from '../article/article.module';
+import { SeedsModule } from '../seeds/seeds.module';
 
 @Module({
   imports: [
@@ -25,12 +27,10 @@ import { AuthModule } from './../auth';
     }),
     ConfigModule,
     AuthModule,
+    ArticleModule,
+    SeedsModule,
   ],
-  controllers: [
-    AppController,
-  ],
-  providers: [
-    AppService,
-  ],
+  controllers: [AppController],
+  providers: [AppService],
 })
-export class AppModule { }
+export class AppModule {}
