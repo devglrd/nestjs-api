@@ -4,6 +4,7 @@ on: [push]
 
 jobs:
   build:
+    runs-on: ${{ matrix.os }}
     strategy:
       matrix:
         node_version: [8, 10, 12]
