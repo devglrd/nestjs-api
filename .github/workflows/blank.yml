@@ -4,11 +4,12 @@ on: [push]
 
 jobs:
 
-  test-docker
+  build
     runs-on: ubuntu-18.04
     steps:
        - uses: actions/checkout@master
-       - uses: actions/docker
+       - name: My first step
+         uses: docker://alpine:3.8
        - name: test
          run: docker build -t glrd/nestjs-api .
   
