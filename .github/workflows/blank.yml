@@ -4,26 +4,11 @@ on: [push]
 
 jobs:
 
-  build
-    runs-on: ubuntu-18.04
+  build:
+    runs-on: ${{ matrix.os }}
     steps:
-       - uses: actions/checkout@master
-       - name: My first step
-         uses: docker://alpine:3.8
-       - name: test
-         run: docker build -t glrd/nestjs-api .
-  
-#  build:
-#    runs-on: ${{ matrix.os }}
-#    strategy:
-#      matrix:
-#        node_version: [8, 10, 12]
-#        os: [ubuntu-latest, windows-latest, macOS-latest]
-#    steps:
-#    - uses: actions/checkout@master
-#    - name: Npm install
-#      run: npm i
-#    - name: Npm build
-#      run: npm run build
-#    - name: Done
-#      run: echo Done
+    - uses: actions/checkout@master
+    - name: Docker install
+      uses: docker://alpine:3.8
+    - name: Docker build
+      run: docker build -t glrd/nestjs-api .
