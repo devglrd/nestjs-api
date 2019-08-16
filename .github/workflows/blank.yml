@@ -3,17 +3,26 @@ name: CI
 on: [push]
 
 jobs:
-  build:
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        node_version: [8, 10, 12]
-        os: [ubuntu-latest, windows-latest, macOS-latest]
+
+  test-docker
+    runs-on: ubuntu-18.04
     steps:
-    - uses: actions/checkout@master
-    - name: Npm install
-      run: npm i
-    - name: Npm build
-      run: npm run build
-    - name: Done
-      run: echo Done
+       - uses: actions/checkout@master
+       - uses: actions/docker
+       - name: test
+         run: docker build -t glrd/nestjs-api .
+  
+#  build:
+#    runs-on: ${{ matrix.os }}
+#    strategy:
+#      matrix:
+#        node_version: [8, 10, 12]
+#        os: [ubuntu-latest, windows-latest, macOS-latest]
+#    steps:
+#    - uses: actions/checkout@master
+#    - name: Npm install
+#      run: npm i
+#    - name: Npm build
+#      run: npm run build
+#    - name: Done
+#      run: echo Done
