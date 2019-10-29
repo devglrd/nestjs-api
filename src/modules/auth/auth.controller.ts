@@ -24,6 +24,7 @@ export class AuthController {
   @ApiResponse({ status: 400, description: 'Bad Request' })
   @ApiResponse({ status: 401, description: 'Unauthorized' })
   async login(@Body() payload: LoginPayload): Promise<any> {
+    console.log(payload);
     const user = await this.authService.validateUser(payload);
     return await this.authService.createToken(user);
   }

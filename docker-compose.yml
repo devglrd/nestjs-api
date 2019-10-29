@@ -2,14 +2,28 @@ version: '3.5'
 services:
   nest-api:
     image: glrd/nest-api
+    restart: always
     build:
       context: ./
     container_name: nest-api
+    working_dir: '/app'
     command: bash -c 'pm2-runtime start ecosystem.config.js -i max'
     links:
       - nest-mysql
     ports:
       - "3000:3000"
+
+  nest-api-serve:
+    image: glrd/nest-api
+    volumes:
+      - './:/app'
+    container_name: nest-api-serve
+    working_dir: '/app'
+    command: bash -c 'npm i && npm run start:dev'
+#    links:doc
+#      - nest-mysql
+    ports:
+      - "3002:3000"
 
   nest-mysql:
     image: mysql:5.7
