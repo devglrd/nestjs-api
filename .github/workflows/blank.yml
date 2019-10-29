@@ -1,0 +1,14 @@
+name: CI
+
+on: [push]
+
+jobs:
+
+  build:
+    runs-on: ${{ matrix.os }}
+    steps:
+    - uses: actions/checkout@master
+    - name: Docker install
+      uses: docker://alpine:3.8
+    - name: Docker build
+      run: docker build -t glrd/nestjs-api .
